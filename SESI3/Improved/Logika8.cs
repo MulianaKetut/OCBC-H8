@@ -26,7 +26,7 @@ public class Logika8
 
         bool x = false;
         string op = "";
-        int temp = 0;
+        double temp = 0.0;
         double temp1 = 0.0;
         do
         {
@@ -46,7 +46,7 @@ public class Logika8
                 temp = star;
                 for (int i = star; i <= end; i++)
                 {
-                    temp1 = i / temp;
+                    temp1 = (i / temp);
                     Console.WriteLine(i + " / " + temp + " = " + temp1);
                 }
             }
