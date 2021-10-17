@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = Kantor_WebAPI
-build_property.ProjectDir = C:\Users\NANA\source\repos\Kantor_WebAPI\Kantor_WebAPI\
+build_property.ProjectDir = E:\OCBC\Code\C#\SESI9\Kantor_WebAPI\Kantor_WebAPI\
