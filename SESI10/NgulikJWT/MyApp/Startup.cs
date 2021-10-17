@@ -63,7 +63,7 @@ namespace MyApp
                             BearerFormat = "JWT",
                             In = ParameterLocation.Header,
                             Description =
-                                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+                                "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\""
                         });
                     swagger
                         .AddSecurityRequirement(new OpenApiSecurityRequirement {
@@ -80,7 +80,7 @@ namespace MyApp
                         });
                 });
 
-            //fot identity
+            //for identity
             services
                 .AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
@@ -111,7 +111,7 @@ namespace MyApp
                             IssuerSigningKey =
                                 new SymmetricSecurityKey(Encoding
                                         .UTF8
-                                        .GetBytes(Configuration["JWT:Secret"]))
+                                        .GetBytes(Configuration["JWT:SecretKey"]))
                         };
                 });
         }

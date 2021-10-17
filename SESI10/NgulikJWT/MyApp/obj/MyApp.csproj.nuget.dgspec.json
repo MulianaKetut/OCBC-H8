@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\OCBC\\Code\\C#\\Assignment3\\MyApp\\MyApp.csproj": {}
+    "E:\\OCBC\\Code\\C#\\SESI10\\NgulikJWT\\MyApp\\MyApp.csproj": {}
   },
   "projects": {
-    "E:\\OCBC\\Code\\C#\\Assignment3\\MyApp\\MyApp.csproj": {
+    "E:\\OCBC\\Code\\C#\\SESI10\\NgulikJWT\\MyApp\\MyApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\OCBC\\Code\\C#\\Assignment3\\MyApp\\MyApp.csproj",
+        "projectUniqueName": "E:\\OCBC\\Code\\C#\\SESI10\\NgulikJWT\\MyApp\\MyApp.csproj",
         "projectName": "MyApp",
-        "projectPath": "E:\\OCBC\\Code\\C#\\Assignment3\\MyApp\\MyApp.csproj",
+        "projectPath": "E:\\OCBC\\Code\\C#\\SESI10\\NgulikJWT\\MyApp\\MyApp.csproj",
         "packagesPath": "C:\\Users\\NANA\\.nuget\\packages\\",
-        "outputPath": "E:\\OCBC\\Code\\C#\\Assignment3\\MyApp\\obj\\",
+        "outputPath": "E:\\OCBC\\Code\\C#\\SESI10\\NgulikJWT\\MyApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\NANA\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -64,7 +64,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[5.6.3, )"
+              "version": "[6.2.3, )"
             }
           },
           "imports": [
