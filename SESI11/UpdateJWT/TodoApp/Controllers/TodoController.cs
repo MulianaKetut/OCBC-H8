@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Data;
 using TodoApp.Models;
+using TodoApp.Models.DTOs.Responses;
 
 namespace TodoApp.Controllers
 {
@@ -35,7 +36,12 @@ namespace TodoApp.Controllers
                 await _context.Items.AddAsync(data);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction("GetItem", new { data.Id }, data);
+                // return CreatedAtAction("GetItem", new { data.Id }, data);
+                CreatedAtAction("GetItem", new { data.Id }, data);
+                return Ok(new ResponseMessage {
+                    Status = "Success",
+                    Message = "Create successfully!"
+                });
             }
             return new JsonResult("Something went wrong!") { StatusCode = 500 };
         }
@@ -76,7 +82,10 @@ namespace TodoApp.Controllers
 
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new ResponseMessage {
+                Status = "Success",
+                Message = "Update successfully!"
+            });
         }
 
         [HttpDelete("{id}")]
@@ -93,7 +102,10 @@ namespace TodoApp.Controllers
             _context.Items.Remove (existItem);
             await _context.SaveChangesAsync();
 
-            return Ok(existItem);
+            return Ok(new ResponseMessage {
+                Status = "Success",
+                Message = "Delete successfully!"
+            });
         }
     }
 }
