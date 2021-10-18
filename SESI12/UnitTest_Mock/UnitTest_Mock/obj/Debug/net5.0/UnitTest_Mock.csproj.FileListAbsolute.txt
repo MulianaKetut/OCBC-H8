@@ -1,0 +1,8 @@
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.csproj.AssemblyReference.cache
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.GeneratedMSBuildEditorConfig.editorconfig
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.AssemblyInfoInputs.cache
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.AssemblyInfo.cs
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.csproj.CoreCompileInputs.cache
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.MvcApplicationPartsAssemblyInfo.cache
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.RazorAssemblyInfo.cache
+E:\OCBC\Code\C#\SESI12\UnitTest_Mock\UnitTest_Mock\obj\Debug\net5.0\UnitTest_Mock.RazorAssemblyInfo.cs

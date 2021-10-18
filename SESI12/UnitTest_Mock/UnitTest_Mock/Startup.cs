@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
+using UnitTest_Mock.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace UnitTest_Mock
 {
@@ -23,7 +27,16 @@ namespace UnitTest_Mock
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            //services.AddRazorPages();
+            services.AddControllers();
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UnitTest_Mock", Version = "v1" });
+            });
+
+            //region connection string
+            services.AddDbContext<ApiDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("myconn")));
+            //endreion
+            services.AddScoped<IEmployeeServices, EmployeeServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -229,7 +229,7 @@ namespace TodoApp.Controllers
             }
             return BadRequest(new RegistrationResponse()
             {
-                Errors = new List<string>() { "Invalid payload" },
+                Errors = new List<string>() { "Invalid payload!" },
                 Success = false
             });
         }
