@@ -5,13 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Models;
 using UnitTest_Mock.Models;
 using Microsoft.EntityFrameworkCore;
+using UnitTest_Mock.Services;
 
 namespace UnitTest_Mock
 {
@@ -33,10 +36,10 @@ namespace UnitTest_Mock
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UnitTest_Mock", Version = "v1" });
             });
 
-            //region connection string
+            #region Connection String
             services.AddDbContext<ApiDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("myconn")));
-            //endreion
-            services.AddScoped<IEmployeeServices, EmployeeServices>();
+            #endregion
+            services.AddScoped<IEmployeeService, EmployeeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +48,8 @@ namespace UnitTest_Mock
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UnitTest_Mock v1"));
             }
             else
             {
@@ -54,7 +59,7 @@ namespace UnitTest_Mock
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -62,7 +67,7 @@ namespace UnitTest_Mock
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

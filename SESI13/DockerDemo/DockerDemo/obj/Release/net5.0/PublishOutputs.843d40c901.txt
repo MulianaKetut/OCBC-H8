@@ -1,0 +1,11 @@
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\DockerDemo.exe
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\appsettings.Development.json
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\appsettings.json
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\DockerDemo.dll
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\DockerDemo.deps.json
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\DockerDemo.runtimeconfig.json
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\DockerDemo.pdb
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\Microsoft.OpenApi.dll
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\Swashbuckle.AspNetCore.Swagger.dll
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\OCBC\Code\C#\SESI13\DockerDemo\DockerDemo\bin\Release\net5.0\publish\Swashbuckle.AspNetCore.SwaggerUI.dll
