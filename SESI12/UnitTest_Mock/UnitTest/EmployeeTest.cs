@@ -18,10 +18,10 @@ namespace UnitTest
         [Fact]
         public async void GetEmployeebyID()
         {
-            mock.Setup(p => p.GetEmployeebyId(1)).ReturnsAsync("JK");
+            mock.Setup(p => p.GetEmployeebyId(2)).ReturnsAsync("BAYA");
             EmployeeController emp = new EmployeeController(mock.Object);
-            string result = await emp.GetEmployeeById(1);
-            Assert.Equal("JK", result);
+            string result = await emp.GetEmployeeById(2);
+            Assert.Equal("BAYA", result);
         }
 
         [Fact]
@@ -29,16 +29,16 @@ namespace UnitTest
         {
             var employeeDTO = new Employee()
             {
-                Id = 1,
-                Name = "JK",
-                Desgination = "SDE"
+                Id = 2,
+                Name = "BAYA",
+                Desgination = "Staff"
             };
 
             mock.Setup(
-                p => p.GetEmployeeDetails(1)).ReturnsAsync(employeeDTO);
+                p => p.GetEmployeeDetails(2)).ReturnsAsync(employeeDTO);
 
             EmployeeController emp = new EmployeeController(mock.Object);
-            var result = await emp.GetEmployeeDetails(1);
+            var result = await emp.GetEmployeeDetails(2);
 
             Assert.True(employeeDTO.Equals(result));
 
