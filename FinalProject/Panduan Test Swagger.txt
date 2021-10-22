@@ -1,0 +1,36 @@
+Panduan Running Final Project PaymentAPI
+
+1. Buka project PaymentAPI
+2. Pastikan MySQL Server sudah running
+3. Running menggunkan cli "dotnet run"
+4. Pada aplikasi browser buka halaman "https://localhost:5001/swagger/index.html"
+5. Test Payment Detail yang ada pada Swagger
+5. GetAll payment detail : /api​/PaymentDetail => Execute
+6. Post Payment detail : /api/PaymentDetail
+request body:
+{
+  "paymentDetailId": 0,
+  "cardOwnerName": "string1",
+  "cardNumber": "string1",
+  "expirationDate": "2021-10-22T00:29:21.488Z",
+  "securityCode": "string1"
+}
+=> Execute
+7. GetById payment detail : /api/PaymentDetail/{id}
+input param : Id => Execute
+8. Update payment detail : /api/PaymentDetail/{id}
+input param : Id = 2
+request body: data update
+{
+  "paymentDetailId": 2,
+  "cardOwnerName": "string2",
+  "cardNumber": "string2",
+  "expirationDate": "2021-10-22T00:29:21.488Z",
+  "securityCode": "string2"
+} => Execute
+9. Delete payment detail : /api​/PaymentDetail​/{id}
+input param : Id => Execute
+
+
+Thanks!
+
