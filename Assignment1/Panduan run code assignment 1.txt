@@ -1,0 +1,21 @@
+Hallo Sobat!
+
+Berikut adalah langkah-langkah pemilihan menu
+serta cara menjalankan program assignment 1 C#
+1. Unzip file menggunakan aplikasi WinZip atau sejenisnya.
+2. Buka file 011_I_Ketut_Muliana_assignment1.cs melalui
+   vs code atau sejenisnya.
+3. Open program, lalu klik kanan pada program
+4. lalu pilih Run Code
+5. Pada terminal akan menampilkan menu tugas 1,2,3,4 dan 5
+6. Sobat bisa memilih menu yang tersedia, jika tidak maka
+   program akan meminta sobat untuk memilih menu kembali.
+7. isi menu field sesuai ketentuan, apabila tidak sesuai
+   maka program akan menampilkan kembali field tersebut
+   sampai data yang diinput sesuai permintaan.
+8. Silahkan coba sepuasnya, apabila masih terdapat bug mohon
+   diinformasika untuk pengembangan lebih lanjut.
+9. Terima kasih sobat!
+
+
+link GitHub : https://github.com/MulianaKetut/assignment1.git
