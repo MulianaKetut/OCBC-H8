@@ -17,9 +17,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using PaymentAPI.Configurations;
 using PaymentAPI.Contexts;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PaymentAPI
 {
@@ -36,6 +36,14 @@ namespace PaymentAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
+
+            services
                 .Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
 
             string myConn =
@@ -45,8 +53,12 @@ namespace PaymentAPI
                 .AddDbContextPool<AppDbContext>(options =>
                     options.UseMySql(myConn, ServerVersion.AutoDetect(myConn)));
 
+            services
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddControllers();
             services
                 .AddSwaggerGen(swagger =>
                 {

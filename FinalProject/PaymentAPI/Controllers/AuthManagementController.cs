@@ -29,19 +29,19 @@ namespace PaymentAPI.Controllers
 
         private readonly TokenValidationParameters _tokenValidationParams;
 
-        private readonly AppDbContext _appDbContext;
+        private readonly AppDbContext _apiDbContext;
 
         public AuthManagementController(
             UserManager<IdentityUser> userManager,
             IOptionsMonitor<JwtConfig> optionsMonitor,
             TokenValidationParameters tokenValidationParams,
-            AppDbContext appDbContext
+            AppDbContext apiDbContext
         )
         {
             _userManager = userManager;
             _jwtConfig = optionsMonitor.CurrentValue;
             _tokenValidationParams = tokenValidationParams;
-            _appDbContext = appDbContext;
+            _apiDbContext = apiDbContext;
         }
 
         [HttpPost]
@@ -56,8 +56,11 @@ namespace PaymentAPI.Controllers
 
                 if (existingUser != null)
                 {
-                    return BadRequest(new ResponseMessage()
-                    { Message = "Email already in use!", Status = "Failed" });
+                    return BadRequest(new RegistrationResponse()
+                    {
+                        Errors = new List<string>() { "Email already in use!" },
+                        Success = false
+                    });
                 }
 
                 var newUser =
@@ -68,6 +71,8 @@ namespace PaymentAPI.Controllers
 
                 if (isCreated.Succeeded)
                 {
+                    // var jwtToken = GenerateJwtToken(newUser);
+                    // return Ok(jwtToken);
                     return Ok(new ResponseMessage {
                         Status = "Success",
                         Message = "Register Successfully!"
@@ -86,68 +91,14 @@ namespace PaymentAPI.Controllers
                     });
                 }
             }
-            return BadRequest(new ResponseMessage()
-            { Message = "Invalid payload!", Status = "Failed" });
-        }
-
-        [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginRequest user)
-        {
-            if (ModelState.IsValid)
+            return BadRequest(new RegistrationResponse()
             {
-                var existingUser =
-                    await _userManager.FindByEmailAsync(user.Email);
-
-                if (existingUser == null)
-                {
-                    return BadRequest(new ResponseMessage()
-                    {
-                        Message = "Email " + user.Email + " Not Found!",
-                        Status = "Failed"
-                    });
-                }
-
-                var isCorrect =
-                    await _userManager
-                        .CheckPasswordAsync(existingUser, user.Password);
-
-                if (!isCorrect)
-                {
-                    return BadRequest(new ResponseMessage()
-                    { Message = "Password is wrong!", Status = "Failed" });
-                }
-
-                var jwtToken = GenerateJwtToken(existingUser);
-
-                return Ok(jwtToken);
-            }
-            return BadRequest(new ResponseMessage()
-            { Message = "Invalid payload!", Status = "Failed" });
+                Errors = new List<string>() { "Invalid payload!" },
+                Success = false
+            });
         }
 
-        [HttpPost]
-        [Route("RefreshToken")]
-        public async Task<IActionResult>
-        RefreshToken([FromBody] TokenRequest tokenRequest)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await VerifyAndGenerateToken(tokenRequest);
-
-                if (result == null)
-                {
-                    return BadRequest(new ResponseMessage()
-                    { Message = "Token Not Found!", Status = "Failed" });
-                }
-
-                return Ok(result);
-            }
-            return BadRequest(new ResponseMessage()
-            { Message = "Invalid payload!", Status = "Failed" });
-        }
-
-        private async Task<ActionResult> GenerateJwtToken(IdentityUser user)
+        private async Task<AuthResult> GenerateJwtToken(IdentityUser user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -189,15 +140,17 @@ namespace PaymentAPI.Controllers
                     Token = RandomString(35) + Guid.NewGuid()
                 };
 
-            await _appDbContext.RefreshToken.AddAsync(refreshToken);
-            await _appDbContext.SaveChangesAsync();
+            await _apiDbContext.RefreshToken.AddAsync(refreshToken);
+            await _apiDbContext.SaveChangesAsync();
 
-            return Ok(new AuthResult()
+            return new AuthResult()
             {
                 Token = jwtToken,
                 Success = true,
                 RefreshToken = refreshToken.Token
-            });
+            };
+
+            // return jwtToken;
         }
 
         private String RandomString(int length)
@@ -210,7 +163,78 @@ namespace PaymentAPI.Controllers
                     .ToArray());
         }
 
-        private async Task<ActionResult>
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest user)
+        {
+            if (ModelState.IsValid)
+            {
+                var existingUser =
+                    await _userManager.FindByEmailAsync(user.Email);
+
+                if (existingUser == null)
+                {
+                    return BadRequest(new RegistrationResponse()
+                    {
+                        Errors =
+                            new List<string>() { "Email "+user.Email+" Not Found!" },
+                        Success = false
+                    });
+                }
+
+                var isCorrect =
+                    await _userManager
+                        .CheckPasswordAsync(existingUser, user.Password);
+
+                if (!isCorrect)
+                {
+                    return BadRequest(new RegistrationResponse()
+                    {
+                        Errors =
+                            new List<string>() { "Wrong password!" },
+                        Success = false
+                    });
+                }
+
+                var jwtToken = await GenerateJwtToken(existingUser);
+
+                return Ok(jwtToken);
+            }
+            return BadRequest(new RegistrationResponse()
+            {
+                Errors = new List<string>() { "Invalid payload!" },
+                Success = false
+            });
+        }
+
+        [HttpPost]
+        [Route("RefreshToken")]
+        public async Task<IActionResult>
+        RefreshToken([FromBody] TokenRequest tokenRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await VerifyAndGenerateToken(tokenRequest);
+
+                if (result == null)
+                {
+                    return BadRequest(new RegistrationResponse()
+                    {
+                        Errors = new List<string>() { "Invalid tokens!" },
+                        Success = false
+                    });
+                }
+
+                return Ok(result);
+            }
+            return BadRequest(new RegistrationResponse()
+            {
+                Errors = new List<string>() { "Invalid payload!" },
+                Success = false
+            });
+        }
+
+        private async Task<AuthResult>
         VerifyAndGenerateToken(TokenRequest tokenRequest)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
@@ -253,49 +277,49 @@ namespace PaymentAPI.Controllers
 
                 if (expiryDate > DateTime.UtcNow)
                 {
-                    return BadRequest(new AuthResult()
+                    return new AuthResult()
                     {
                         Success = false,
                         Errors =
                             new List<string>() { "Token has not yet expired" }
-                    });
+                    };
                 }
 
                 //validation 4 - validate existence of the token
                 var storedToken =
-                    await _appDbContext
+                    await _apiDbContext
                         .RefreshToken
                         .FirstOrDefaultAsync(x =>
                             x.Token == tokenRequest.RefreshToken);
 
                 if (storedToken == null)
                 {
-                    return BadRequest(new AuthResult()
+                    return new AuthResult()
                     {
                         Success = false,
                         Errors = new List<string>() { "Token does not exist!" }
-                    });
+                    };
                 }
 
                 //validation 5 - validate if used
                 if (storedToken.IsUsed)
                 {
-                    return BadRequest(new AuthResult()
+                    return new AuthResult()
                     {
                         Success = false,
                         Errors = new List<string>() { "Token has been used!" }
-                    });
+                    };
                 }
 
                 //validation 6 - validate if revoked
                 if (storedToken.IsRevoked)
                 {
-                    return BadRequest(new AuthResult()
+                    return new AuthResult()
                     {
                         Success = false,
                         Errors =
                             new List<string>() { "Token has been revoked!" }
-                    });
+                    };
                 }
 
                 //validation 7 - validate the id
@@ -307,17 +331,17 @@ namespace PaymentAPI.Controllers
                         .Value;
                 if (storedToken.JwtId != jti)
                 {
-                    return BadRequest(new AuthResult()
+                    return new AuthResult()
                     {
                         Success = false,
                         Errors = new List<string>() { "Token doesn't match!" }
-                    });
+                    };
                 }
 
                 //update current token
                 storedToken.IsUsed = true;
-                _appDbContext.RefreshToken.Update (storedToken);
-                await _appDbContext.SaveChangesAsync();
+                _apiDbContext.RefreshToken.Update (storedToken);
+                await _apiDbContext.SaveChangesAsync();
 
                 //Generate new token
                 var dbUser =
@@ -332,21 +356,21 @@ namespace PaymentAPI.Controllers
                         .Contains("Lifetime validation failed. The token is expired!")
                 )
                 {
-                    return BadRequest(new AuthResult()
+                    return new AuthResult()
                     {
                         Success = false,
                         Errors =
                             new List<string>()
                             { "Token has expired please re-login!" }
-                    });
+                    };
                 }
                 else
                 {
-                    return BadRequest(new AuthResult()
+                    return new AuthResult()
                     {
                         Success = false,
                         Errors = new List<string>() { "Something went wrong!" }
-                    });
+                    };
                 }
             }
         }
