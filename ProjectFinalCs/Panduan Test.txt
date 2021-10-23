@@ -1,0 +1,125 @@
+Panduan Test Final Project PaymentAPI Local MySql
+
+1. Buka project PaymentAPI
+2. Pastikan MySQL Server sudah running
+3. Running menggunkan cli "dotnet run"
+4. Pada aplikasi browser buka halaman "https://localhost:5001/swagger/index.html"
+   ==Test AUTH==
+5. Register : /api​/AuthManagement​/Register
+request body
+{
+  "username": "string",
+  "email": "user@example.com",
+  "password": "string"
+}
+6. Login : C
+request body
+{
+  "email": "user@example.com",
+  "password": "string"
+}
+7. RefreshToken : /api/AuthManagement/RefreshToken
+request body
+{
+  "token": "string",
+  "refreshToken": "string"
+}
+yang diperoleh dari response setelah Login
+   ==Payment Detail==
+8. Untuk mengakses endpoint payment detail anda harus login terlebih dahulu
+   untuk memperoleh token
+9. Paste token yang diperoleh setelah login berhasil di "Authorize" pada swagger
+   (tanpa Bearer)
+10.Test Payment Detail yang ada pada Swagger
+11.GetAll payment detail : /api​/PaymentDetail => Execute
+12. Post Payment detail : /api/PaymentDetail
+request body:
+{
+  "paymentDetailId": 0,
+  "cardOwnerName": "string1",
+  "cardNumber": "string1",
+  "expirationDate": "2021-10-22T00:29:21.488Z",
+  "securityCode": "string1"
+}
+=> Execute
+13. GetById payment detail : /api/PaymentDetail/{id}
+input param : Id => Execute
+14. Update payment detail : /api/PaymentDetail/{id}
+input param : Id = 2
+request body: data update
+{
+  "paymentDetailId": 2,
+  "cardOwnerName": "string2",
+  "cardNumber": "string2",
+  "expirationDate": "2021-10-22T00:29:21.488Z",
+  "securityCode": "string2"
+} => Execute
+15. Delete payment detail : /api​/PaymentDetail​/{id}
+input param : Id => Execute
+
+case : assert true
+Noted : assert false bisa dicoba menginputkan data yang salah pada field
+
+
+======= Test Via Postman ================
+Link Test Final Project PaymentAPI Remote MySql
+1. Register : POST - https://endpoint-payment.herokuapp.com/api/Auth/Register
+request body:
+{
+  "username": "User3",
+  "email": "user3@example.com",
+  "password": "User3.123"
+}
+
+2. Login : POST - https://endpoint-payment.herokuapp.com/api/Auth/Login
+request body:
+{
+  "email": "user3@example.com",
+  "password": "User3.123"
+}
+
+3. Refresh Token : POST - https://endpoint-payment.herokuapp.com/api/Auth/RefreshToken
+request body:
+{
+  "token": "{paste token dari response login, jika berhasil login}",
+  "password": "{paste token dari response login, jika berhasil login}"
+}
+
+Note: sebelum test selanjutnya setiap test pada Headers add Key "Authorization", Value "Bearer {token}"
+agar sobat dapat mengakses endpoint selanjutnya. Lama waktu bisa megakses endpoint 30 menit, jika
+lebih dari itu harap login kembali unutk mendapatkan token.
+
+4. Get All Payment Detail : GET - https://endpoint-payment.herokuapp.com/api/PaymentDetail
+
+5. Post Data Payment Detail : POST - https://endpoint-payment.herokuapp.com/api/PaymentDetail
+request body:
+{
+  "paymentDetailId": 0,
+  "cardOwnerName": "string3",
+  "cardNumber": "string3",
+  "expirationDate": "2021-10-22T00:29:21.488Z",
+  "securityCode": "string3"
+}
+
+6. Get By Id Payment Detail : GET - https://endpoint-payment.herokuapp.com/api/PaymentDetail/{id}
+param : id
+
+7. Update Payment Detail : PUT - https://endpoint-payment.herokuapp.com/api/PaymentDetail/{id}
+param : id
+request body:
+{
+  "paymentDetailId": 1,
+  "cardOwnerName": "string1",
+  "cardNumber": "string1",
+  "expirationDate": "2021-10-22T00:29:21.488Z",
+  "securityCode": "string1"
+}
+
+8. Delete Payment Detail By Id : DELETE - https://endpoint-payment.herokuapp.com/api/PaymentDetail/{id}
+param : id
+
+
+
+Thanks sobat!
+
+https://github.com/MulianaKetut/OCBC-H8/tree/main/FinalProject
