@@ -1,0 +1,33 @@
+Hallo Sobat!
+
+Berikut path untuk mencoba/test CRUD API Movie Web App
+
+Get    : https://localhost:44349/api/movie      (get all)
+Get    : https://localhost:44349/api/movie/{id} (get by id)
+Post   : https://localhost:44349/api/movie
+put    : https://localhost:44349/api/movie
+delete : https://localhost:44349/api/movie/{id} (delete by id)
+
+format json post: 
+{
+    "Name" : "Patrik",
+    "Genre" : "Tentang pahlawan super",
+    "Duration" : "2 jam",
+    "ReleaseDate" : "10-17-2021"
+}
+
+format json put:
+{
+    "id":"1",
+    "Name" : "Rudy",
+    "Genre" : "Tentang pahlawan super",
+    "Duration" : "3 jam",
+    "ReleaseDate" : "10-19-2021"
+}
+
+
+
+Terima kasih sobat!
+
+
+https://github.com/MulianaKetut/OCBC-H8/tree/main/Assignment3/MovieApp
